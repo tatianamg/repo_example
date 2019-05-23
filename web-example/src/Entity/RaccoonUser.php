@@ -18,25 +18,98 @@ class RaccoonUser implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="text")
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $age;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     */
+    private $weight;
+
+    /**
+     * @ORM\Column(type="text")
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string")
-     */
-    private $password;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    public function setWeight($weight): self
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+	
+	/**
+	* A visual identifier that represents this user.
+	*
+	* @see UserInterface
+	*/
+	public function getUsername(): ?string
+         	{
+         		return $this->email;
+         	}
+	
+	public function getSalt()
+         	{
+         		// not needed for apps that do not check user passwords
+         	}
+	
+	public function eraseCredentials()
+         	{
+         		// If you store any temporary, sensitive data on the user, clear it here
+         		$this->plainPassword = null;
+         	}
+	/**
+	* @see UserInterface
+	*/
+	public function getRoles(): array
+         	{
+         		$roles = $this->roles;
+         		// guarantee every user at least has ROLE_USER
+         		$roles[] = 'DEFAULT_ROLE_USER';
+         		return array_unique($roles);
+         	}
+	
+	public function getPassword(){}
 
     public function getEmail(): ?string
     {
@@ -48,66 +121,5 @@ class RaccoonUser implements UserInterface
         $this->email = $email;
 
         return $this;
-    }
-
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getPassword(): string
-    {
-        return (string) $this->password;
-    }
-
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 }
