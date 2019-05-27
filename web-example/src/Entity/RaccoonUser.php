@@ -37,6 +37,11 @@ class RaccoonUser implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $password;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -84,30 +89,30 @@ class RaccoonUser implements UserInterface
 	* @see UserInterface
 	*/
 	public function getUsername(): ?string
-         	{
-         		return $this->email;
-         	}
+               	{
+               		return $this->email;
+               	}
 	
 	public function getSalt()
-         	{
-         		// not needed for apps that do not check user passwords
-         	}
+               	{
+               		// not needed for apps that do not check user passwords
+               	}
 	
 	public function eraseCredentials()
-         	{
-         		// If you store any temporary, sensitive data on the user, clear it here
-         		$this->plainPassword = null;
-         	}
+               	{
+               		// If you store any temporary, sensitive data on the user, clear it here
+               		//$this->plainPassword = null;
+               	}
 	/**
 	* @see UserInterface
 	*/
 	public function getRoles(): array
-         	{
-         		$roles = $this->roles;
-         		// guarantee every user at least has ROLE_USER
-         		$roles[] = 'DEFAULT_ROLE_USER';
-         		return array_unique($roles);
-         	}
+               	{
+               		//$roles = $this->roles;
+               		// guarantee every user at least has ROLE_USER
+               		$roles[] = 'DEFAULT_ROLE_USER';
+               		return array_unique($roles);
+               	}
 	
 	public function getPassword(){}
 
@@ -119,6 +124,13 @@ class RaccoonUser implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
 
         return $this;
     }
