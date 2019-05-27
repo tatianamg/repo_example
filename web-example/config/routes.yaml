@@ -13,3 +13,6 @@ about-page:
 contact-page:
     path: /contact
     controller: App\Controller\BlogController::renderContactPage
+entry-creator:
+    path: /new-entry
+    controller: App\Controller\NewPostController::new

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\RaccoonUser;
+use App\Entity\RaccoonEntry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method RaccoonUser|null find($id, $lockMode = null, $lockVersion = null)
- * @method RaccoonUser|null findOneBy(array $criteria, array $orderBy = null)
- * @method RaccoonUser[]    findAll()
- * @method RaccoonUser[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method RaccoonEntry|null find($id, $lockMode = null, $lockVersion = null)
+ * @method RaccoonEntry|null findOneBy(array $criteria, array $orderBy = null)
+ * @method RaccoonEntry[]    findAll()
+ * @method RaccoonEntry[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class RaccoonUserRepository extends ServiceEntityRepository
+class RaccoonEntryRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, RaccoonUser::class);
+        parent::__construct($registry, RaccoonEntry::class);
     }
 
     // /**
-    //  * @return RaccoonUser[] Returns an array of RaccoonUser objects
+    //  * @return RaccoonEntry[] Returns an array of RaccoonEntry objects
     //  */
     /*
     public function findByExampleField($value)
@@ -36,15 +36,15 @@ class RaccoonUserRepository extends ServiceEntityRepository
     }
     */
 
-    
-    public function findOneById($value): ?RaccoonUser
+    /*
+    public function findOneBySomeField($value): ?RaccoonEntry
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.id = :val')
+            ->andWhere('r.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    
+    */
 }

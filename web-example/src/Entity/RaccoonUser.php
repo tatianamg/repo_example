@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -41,6 +43,16 @@ class RaccoonUser implements UserInterface
      * @ORM\Column(type="text")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\RaccoonEntry", mappedBy="author", orphanRemoval=true)
+     */
+    private $raccoonEntries;
+
+    public function __construct()
+    {
+        $this->raccoonEntries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,30 +101,30 @@ class RaccoonUser implements UserInterface
 	* @see UserInterface
 	*/
 	public function getUsername(): ?string
-               	{
-               		return $this->email;
-               	}
+                                       	{
+                                       		return $this->email;
+                                       	}
 	
 	public function getSalt()
-               	{
-               		// not needed for apps that do not check user passwords
-               	}
+                                       	{
+                                       		// not needed for apps that do not check user passwords
+                                       	}
 	
 	public function eraseCredentials()
-               	{
-               		// If you store any temporary, sensitive data on the user, clear it here
-               		//$this->plainPassword = null;
-               	}
+                                       	{
+                                       		// If you store any temporary, sensitive data on the user, clear it here
+                                       		//$this->plainPassword = null;
+                                       	}
 	/**
 	* @see UserInterface
 	*/
 	public function getRoles(): array
-               	{
-               		//$roles = $this->roles;
-               		// guarantee every user at least has ROLE_USER
-               		$roles[] = 'DEFAULT_ROLE_USER';
-               		return array_unique($roles);
-               	}
+                                       	{
+                                       		//$roles = $this->roles;
+                                       		// guarantee every user at least has ROLE_USER
+                                       		$roles[] = 'DEFAULT_ROLE_USER';
+                                       		return array_unique($roles);
+                                       	}
 	
 	public function getPassword(){}
 
@@ -131,6 +143,37 @@ class RaccoonUser implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RaccoonEntry[]
+     */
+    public function getRaccoonEntries(): Collection
+    {
+        return $this->raccoonEntries;
+    }
+
+    public function addRaccoonEntry(RaccoonEntry $raccoonEntry): self
+    {
+        if (!$this->raccoonEntries->contains($raccoonEntry)) {
+            $this->raccoonEntries[] = $raccoonEntry;
+            $raccoonEntry->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRaccoonEntry(RaccoonEntry $raccoonEntry): self
+    {
+        if ($this->raccoonEntries->contains($raccoonEntry)) {
+            $this->raccoonEntries->removeElement($raccoonEntry);
+            // set the owning side to null (unless already changed)
+            if ($raccoonEntry->getAuthor() === $this) {
+                $raccoonEntry->setAuthor(null);
+            }
+        }
 
         return $this;
     }
