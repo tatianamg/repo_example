@@ -1,6 +1,15 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-personal-page:
-    path: /personal
-    controller: App\Controller\PersonalPanelController::renderPersonalPage
+index:
+    path: /
+    controller: App\Controller\BlogController::renderIndexPage
+news-page:
+    path: /newspaper
+    controller: App\Controller\BlogController::renderNewsPage
+feedback-page:
+    path: /message
+    controller: App\Controller\BlogController::renderFeedbackPage
+about-page:
+    path: /about
+    controller: App\Controller\BlogController::renderAboutPage
+contact-page:
+    path: /contact
+    controller: App\Controller\BlogController::renderContactPage
