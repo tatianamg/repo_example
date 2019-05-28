@@ -1,6 +1,6 @@
 # Raccoon Web
 
-This site will show information about rodants.
+This site will show information about rodents.
 
 ## Getting Started
 
