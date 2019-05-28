@@ -32,6 +32,11 @@ class RaccoonEntry
      */
     private $author;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $category;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class RaccoonEntry
     public function setAuthor(?RaccoonUser $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(string $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }

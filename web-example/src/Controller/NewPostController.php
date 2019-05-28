@@ -20,6 +20,7 @@ class NewPostController extends AbstractController
 		
         $form = $this->createFormBuilder($entry)
             ->add('title', TextType::class)
+			->add('category', TextType::class)
             ->add('body', TextareaType::class)
             ->getForm();
 		

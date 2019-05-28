@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\RaccoonEntry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,7 +23,9 @@ class BlogController extends AbstractController
      */
     public function renderNewsPage(Request $request): Response
     {
-        return $this->render('personal/news-page.html.twig');
+		$entries = $this->getDoctrine()->getRepository(RaccoonEntry::class)->findAll();
+		
+        return $this->render('personal/news-page.html.twig',['entries'=>$entries]);
     }
 	
 	/**
